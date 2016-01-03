@@ -1,0 +1,30 @@
+<% provide(:title, "Edit hokkaido_value") %>
+<h1>データを更新したい自治体を選択してください</h1>
+
+<div class="row">
+   <div class="col-md-6 col-md-offset-3">
+    <%= form_for @hvalue, :url => {:action => 'edit'} do |f| %>
+      <%= f.label "自治体名" %>
+      <%= f.collection_select :N03_004, Hvalue.all, :N03_004, :N03_004, :onchange => "this.form.submit()"%>
+      <%= f.submit "自治体の情報を取得", class: "btn btn-primary" %>
+    <% end %>
+   </div>
+   
+  <% if params.has_key?(:hvalue) then %>
+  <h1>以下から各サービスの契約会社を変更してください</h1>
+  
+   <div class="col-md-6 col-md-offset-3">
+    <%= form_for @hvalue, :url => {:action => 'update'} do |f| %>
+      <%= f.label "自治体名(固定)" %>
+      <%= f.select :N03_004, [@hvalue[:N03_004]], :selected => @hvalue[:N03_004] %>
+      
+      <% @column.each do |i| %>
+      <%= f.label "サービス名: #{i}" %>
+      <%= f.select i, @value, :selected => @hvalue[i] %>
+      <% end %>
+      
+      <%= f.submit "Save changes", class: "btn btn-primary" %>
+    <% end %>
+   </div>
+  <% end %>
+</div>
